@@ -1,0 +1,49 @@
+package exercise08.test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import exercise08.CorporateInvoice;
+
+/**
+ * CorporateInvoiceクラスのテスト
+ */
+public class CorporateInvoiceTest {
+
+    private CorporateInvoice invoice;
+
+    // 各テスト前に毎回呼ばれる初期化処理
+    @Before
+    public void setUp() {
+        // テスト用のインスタンス作成
+        invoice = new CorporateInvoice("テスト株式会社", 100000, "CORP-999");
+    }
+
+    @Test
+    public void testConstructorAndGetters() {
+        // コンストラクタとgetterが正しく動作するかのテスト
+        assertEquals("テスト株式会社", invoice.getClientName());
+        assertEquals(100000, invoice.getAmount());
+        assertEquals("CORP-999", invoice.getCorporateId());
+    }
+
+    @Test
+    public void testSetters() {
+        // setterで値を変更し、正しく取得できるかのテスト
+        invoice.setClientName("株式会社変更");
+        invoice.setAmount(250000);
+        invoice.setCorporateId("CORP-NEW");
+
+        assertEquals("株式会社変更", invoice.getClientName());
+        assertEquals(250000, invoice.getAmount());
+        assertEquals("CORP-NEW", invoice.getCorporateId());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNegativeAmountThrowsException() {
+        // マイナスの請求金額を設定したときに例外がスローされるかのテスト
+        invoice.setAmount(-1000);
+    }
+}
